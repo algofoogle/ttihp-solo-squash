@@ -1,0 +1,3 @@
+[submodule "src/solo_squash"]
+	path = src/solo_squash
+	url = https://github.com/algofoogle/solo_squash

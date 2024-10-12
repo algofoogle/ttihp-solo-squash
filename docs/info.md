@@ -1,20 +1,20 @@
-<!---
-
-This file is used to generate your project datasheet. Please fill in the information below and delete any unused
-sections.
-
-You can also include images in this folder and reference them in the markdown. Each image must be less than
-512 kb in size, and the combined size of all images must be less than 1 MB.
--->
+![Solo Squash VGA game running on an FPGA](./solo-squash-fpga.jpg)
 
 ## How it works
 
-Explain how your project works
+This is a framebuffer-less VGA display generator (i.e. it is 'racing the beam') that implements a primitive Pong-like video game.
 
 ## How to test
 
-Explain how to use your project
+You can find a full testing guide for the TT03p5 version here: https://github.com/algofoogle/tt03p5-solo-squash/blob/main/doc/testing.md
+
+I plan on updating this, as this implementation will change the pinout a bit, if nothing else.
+
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+The main things this needs are:
+
+*   A VGA DAC. TinyVGA will do. Actually, it's only RGB111 (1 bit per channel), so you don't even really need a DAC, just level shifters/buffers to 0.7V.
+*   Speaker (e.g. piezo disc or "aux" input to a powered speaker).
+*   Buttons for controlling the game.

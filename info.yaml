@@ -1,55 +1,57 @@
 # Tiny Tapeout project information
 project:
-  title:        ""      # Project title
-  author:       ""      # Your name
-  discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  ""      # One line description of what your project does
+  title:        "Solo Squash VGA game"      # Project title
+  author:       "Anton Maurovic"      # Your name
+  discord:      "algofoogle"      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
+  description:  "VGA display driver that implements a minimal Pong-like game for 1 player"      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
-  clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
+  clock_hz:     25175000       # Clock frequency in Hz (or 0 if not applicable)
 
   # How many tiles your design occupies? A single tile is about 167x108 uM.
   tiles: "1x1"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
 
   # Your top module name must start with "tt_um_". Make it unique by including your github username:
-  top_module:  "tt_um_example"
+  top_module:  "tt_um_algofoogle_solo_squash"
 
   # List your project's source files here.
   # Source files must be in ./src and you must list each source file separately, one per line.
   # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
-    - "project.v"
+    - project.v
+    - lzc_fast.v
+    - solo_squash/src/solo_squash.v
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
-  ui[2]: ""
-  ui[3]: ""
-  ui[4]: ""
-  ui[5]: ""
-  ui[6]: ""
-  ui[7]: ""
+  ui[0]: pause       # Keep the game in a paused state while asserted.
+  ui[1]: new_game    # Reset game state.
+  ui[2]: down_key    # Move paddle down while asserted.
+  ui[3]: up_key      # Move paddle up while asserted.
+  ui[4]: extra_sel   # Select what the extra debug1&2 signals (top 2 bits of bidirectional port) are for.
+  ui[5]: ""          # Unused.
+  ui[6]: ""          # Unused.
+  ui[7]: ""          # Unused.
 
   # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
-  uo[6]: ""
-  uo[7]: ""
+  uo[0]: blue        # VGA signal: blue
+  uo[1]: green       # VGA signal: green
+  uo[2]: red         # VGA signal: red
+  uo[3]: hsync       # VGA signal: horizontal sync pulse
+  uo[4]: vsync       # VGA signal: vertical sync pulse
+  uo[5]: speaker     # Speaker tone
+  uo[6]: col0        # Asserted whenever VGA horizontal scan is at pixel 0
+  uo[7]: row0        # Asserted while the VGA vertical scan is at line 0
 
   # Bidirectional pins
-  uio[0]: ""
-  uio[1]: ""
-  uio[2]: ""
-  uio[3]: ""
-  uio[4]: ""
-  uio[5]: ""
-  uio[6]: ""
-  uio[7]: ""
+  uio[0]: lzc_out[0]  # Leading zero counter experiment; count bit 0
+  uio[1]: lzc_out[1]  # Leading zero counter experiment; count bit 1
+  uio[2]: lzc_out[2]  # Leading zero counter experiment; count bit 2
+  uio[3]: lzc_out[3]  # Leading zero counter experiment; count bit 3
+  uio[4]: lzc_out[4]  # Leading zero counter experiment; count bit 4
+  uio[5]: lzc_all     # Leading zero counter experiment; asserted if lzc_out==24
+  uio[6]: debug1      # If extra_sel==0: UNregistered (direct) green signal; else: 'visible' signal.
+  uio[7]: debug2      # if extra_sel==0: UNregistered (direct) red signal; else: UNregistered blue signal.
 
 # Do not change!
 yaml_version: 6
